@@ -1,0 +1,122 @@
+<div class="tables">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Available agents</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="start-agent" *ngFor="let type of this.ws.agentTypes">
+        <td data-toggle="modal" [attr.data-target]="'#' + type.name">{{type.name}} {{type.module}}</td>
+
+        <div class="modal" id={{type.name}}>
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <h3 class="modal-title">Start {{type.name}}</h3>
+                <button type="button" class="close" data-dismiss="modal" (click)="agent.name=''">&times;</button>
+              </div>
+
+              <div class="modal-body">
+                <form #agent="ngForm">
+                  <div class="form-group">
+                    <label for="comment">Enter agent name:</label>
+                    <input type="text" [(ngModel)]="agent.name" name="name" required>
+                  </div>
+                </form>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" [disabled]="!agent.valid" (click)="startAgent(agent.name, type)">OK</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Running agents</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let agent of this.ws.runningAgents">
+        <td>{{agent.name}}@{{agent.type.name}}
+          <button class="btn btn-danger" style="float:right" (click)="stopAgent(agent)">Stop</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="tables">
+  <form #message="ngForm">
+    <fieldset>
+
+      <label class=" control-label" for="selectbasic">Performative:</label>
+      <select id="selectbasic" [(ngModel)]="message.performative" name="performative" class="form-control" required>
+        <option></option>
+        <option *ngFor="let performative of this.ws.performatives" value={{performative}}>{{performative}}</option>
+      </select>
+
+      <label class="control-label" for="selectbasic">Sender:</label>
+      <select id="selectbasic" [(ngModel)]="message.sender" name="sender" class="form-control">
+        <option></option>
+        <option *ngFor="let agent of this.ws.runningAgents" value="{{agent.name + '$' + agent.type.name + '$' + agent.type.module +'$'+ agent.host.alias +'$'+agent.host.address}}">{{agent.name}}@{{agent.type.name}}</option>
+      </select>
+
+
+      <div class="form-group">
+        <label class="control-label" for="selectmultiple">Receivers:</label>
+        <select id="selectmultiple" [(ngModel)]="message.receivers" name="receivers" class="form-control" multiple="multiple" required>
+          <option></option>
+          <option *ngFor="let agent of this.ws.runningAgents" value="{{agent.name + '$' + agent.type.name + '$' + agent.type.module +'$'+ agent.host.alias +'$'+agent.host.address}}">{{agent.name}}@{{agent.type.name}}</option>
+        </select>
+      </div>
+
+      <label class="control-label" for="selectbasic">Reply to:</label>
+      <select id="selectbasic" [(ngModel)]="message.replyto" name="replyto" class="form-control">
+        <option></option>
+        <option *ngFor="let agent of this.ws.runningAgents" value="{{agent.name + '$' + agent.type.name + '$' + agent.type.module +'$'+ agent.host.alias +'$'+agent.host.address}}">{{agent.name}}@{{agent.type.name}}</option>
+      </select>
+
+      <label class="control-label" for="selectbasic">Content:</label>
+      <input type="text" [(ngModel)]="message.content" name="content" class="form-control">
+
+      <label class="control-label" for="selectbasic">Language:</label>
+      <input type="text" [(ngModel)]="message.language" name="language" class="form-control">
+
+      <label class="control-label" for="selectbasic">Encoding:</label>
+      <input type="text" [(ngModel)]="message.encoding" name="encoding" class="form-control">
+
+      <label class="control-label" for="selectbasic">Ontology:</label>
+      <input type="text" [(ngModel)]="message.ontology" name="ontology" class="form-control">
+
+      <label class="control-label" for="selectbasic">Protocol:</label>
+      <input type="text" [(ngModel)]="message.protocol" name="protocol" class="form-control">
+
+      <label class="control-label" for="selectbasic">ConversationId:</label>
+      <input type="text" [(ngModel)]="message.conversationid" name="conversationid" class="form-control">
+
+      <label class="control-label" for="selectbasic">Reply with:</label>
+      <input type="text" [(ngModel)]="message.replywith" name="replywith" class="form-control">
+
+      <label class="control-label" for="selectbasic">In reply to:</label>
+      <input type="text" [(ngModel)]="message.inreplyto" name="inreplyto" class="form-control">
+
+      <label class="control-label" for="selectbasic">Reply by:</label>
+      <input type="text" [(ngModel)]="message.replyby" name="replyby" class="form-control">
+      <br>
+      <button id="send" class="btn btn-success" [disabled]="!message.valid" (click)="sendMessage(message)">Send</button>
+    </fieldset>
+  </form>
+</div>
+<button id="clear" class="btn btn-success" (click)="clearConsole()">Clear console</button>
+<div id="console">
+  <div *ngFor="let message of this.ws.messages">{{message}}</div>
+</div>
