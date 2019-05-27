@@ -209,6 +209,9 @@ public class AgentManager implements AgentManagerLocal {
 		}
 	}
 
-	
+	@Override
+	public void deleteTypesByNode(AgentCenter center) {
+		agentTypes.remove(center);
+	}
 
 }

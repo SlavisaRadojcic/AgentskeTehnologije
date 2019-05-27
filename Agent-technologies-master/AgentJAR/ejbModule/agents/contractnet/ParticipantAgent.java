@@ -8,10 +8,7 @@ import model.agent.AID;
 import model.agent.AgentClass;
 import utils.MessageBuilder;
 
-/**
- * @author Nikola
- *
- */
+
 @Stateful
 public class ParticipantAgent extends AgentClass {
 
