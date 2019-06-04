@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { AType } from '../interfaces/atype';
 import { AID } from '../interfaces/aid';
 
-const port: string = "8080";
+const port: string = "9090";
 const host: string = "localhost";
 
 @Injectable()

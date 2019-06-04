@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 
 
 
-const url = 'ws://localhost:8080/AgentWAR/websocket';
+const url = 'ws://localhost:9090/AgentWAR/websocket';
 
 @Injectable()
 export class WebsocketService {
