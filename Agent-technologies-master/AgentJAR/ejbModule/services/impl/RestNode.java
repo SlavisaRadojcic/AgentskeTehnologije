@@ -27,24 +27,7 @@ public class RestNode implements RestNodeLocal {
 		}
 	}
 
-	@Override
-	public void postNode(AgentCenter ac) {
-		try {
-			Context context = new InitialContext();
-			NodeManagerLocal nml = (NodeManagerLocal) context.lookup(NodeManagerLocal.LOOKUP);
-			
-			if(nml.getMasterNode().getAddress().equals(nml.getThisNode().getAddress())) {
-				// ako sam ja master onda mi je stigao poziv od novog cvora da ga ubacim u mrezu
-				connectSlave(ac);
-			} else {
-				// ili sam vec u mrezi pa mi master salje novi cvor
-				// ili sam novi cvor pa mi master salje ostale cvorove u mrezi
-				nml.addSlave(ac);
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	private void connectSlave(AgentCenter slaveAddr) {
 		List<AgentType> slaveTypes = RestBuilder.getSlaveAgentTypes(slaveAddr); // trazimo od slavea sve tipove agenata
@@ -66,6 +49,24 @@ public class RestNode implements RestNodeLocal {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 		
-	}	
+	}
+	@Override
+	public void postNode(AgentCenter ac) {
+		try {
+			Context context = new InitialContext();
+			NodeManagerLocal nml = (NodeManagerLocal) context.lookup(NodeManagerLocal.LOOKUP);
+			
+			if(nml.getMasterNode().getAddress().equals(nml.getThisNode().getAddress())) {
+				// ako sam ja master onda mi je stigao poziv od novog cvora da ga ubacim u mrezu
+				connectSlave(ac);
+			} else {
+				// ili sam vec u mrezi pa mi master salje novi cvor
+				// ili sam novi cvor pa mi master salje ostale cvorove u mrezi
+				nml.addSlave(ac);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

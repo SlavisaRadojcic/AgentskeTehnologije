@@ -49,14 +49,17 @@ public class AID implements Serializable{
 	public void setType(AgentType type) {
 		this.type = type;
 	}
+	
+	public void setHost(AgentCenter host) {
+		this.host = host;
+	}
+	
 
 	public AgentCenter getHost() {
 		return host;
 	}
 
-	public void setHost(AgentCenter host) {
-		this.host = host;
-	}
+	
 
 	@Override
 	public String toString() {

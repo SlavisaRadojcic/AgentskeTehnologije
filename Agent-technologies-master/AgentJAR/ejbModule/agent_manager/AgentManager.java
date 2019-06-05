@@ -43,6 +43,24 @@ public class AgentManager implements AgentManagerLocal {
 		agentTypes.put(center, agentTypesList);
 	}
 
+	
+
+	@Override
+	public List<AID> getRunningAgents() {
+		return new ArrayList<>(runningAgents.keySet());
+	}
+
+	@Override
+	public List<AgentType> getAgentTypes() {
+		ArrayList<AgentType> retVal = new ArrayList<>();
+		for (AgentCenter key : agentTypes.keySet()) {
+			retVal.addAll(agentTypes.get(key));
+		}
+		return retVal;
+	}
+
+	
+	
 	private ArrayList<AgentType> processFile(File f) {
 		ArrayList<AgentType> types = new ArrayList<>();
 		if (f.isDirectory()) {
@@ -64,41 +82,6 @@ public class AgentManager implements AgentManagerLocal {
 
 		return types;
 	}
-
-	@Override
-	public List<AID> getRunningAgents() {
-		return new ArrayList<>(runningAgents.keySet());
-	}
-
-	@Override
-	public List<AgentType> getAgentTypes() {
-		ArrayList<AgentType> retVal = new ArrayList<>();
-		for (AgentCenter key : agentTypes.keySet()) {
-			retVal.addAll(agentTypes.get(key));
-		}
-		return retVal;
-	}
-
-	@Override
-	public boolean msgToAgent(AID agent, ACLMessage msg) {
-		AID proba = containsAgent(agent);
-		AgentClass receiver = runningAgents.get(proba);
-		if (receiver != null) {
-			receiver.handleMessage(msg);
-
-			try {
-				Context context = new InitialContext();
-				WebSocketLocal wsl = (WebSocketLocal) context.lookup(WebSocketLocal.LOOKUP);
-				wsl.sendMessage(JsonUtils.getACLMessageString(msg));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	@Override
 	public void startAgent(AID agent) {
 		AID a = containsAgent(agent);
@@ -187,6 +170,26 @@ public class AgentManager implements AgentManagerLocal {
 			e.printStackTrace();
 		}
 
+	}
+	
+	@Override
+	public boolean msgToAgent(AID agent, ACLMessage msg) {
+		AID proba = containsAgent(agent);
+		AgentClass receiver = runningAgents.get(proba);
+		if (receiver != null) {
+			receiver.handleMessage(msg);
+
+			try {
+				Context context = new InitialContext();
+				WebSocketLocal wsl = (WebSocketLocal) context.lookup(WebSocketLocal.LOOKUP);
+				wsl.sendMessage(JsonUtils.getACLMessageString(msg));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

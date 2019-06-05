@@ -16,10 +16,7 @@ import javax.naming.NamingException;
 import messages.MDBConsumer;
 import model.acl.ACLMessage;
 
-/**
- * @author Nikola
- *
- */
+
 public class MessageBuilder {
 
 	public static boolean sendACL(ACLMessage msg) {

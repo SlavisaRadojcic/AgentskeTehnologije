@@ -7,10 +7,7 @@ import model.agent.AID;
 import model.agent.AgentType;
 import model.center.AgentCenter;
 
-/**
- * @author Nikola
- *
- */
+
 public class JsonUtils {
 
 	public static String getACLMessageString(ACLMessage msg) {
