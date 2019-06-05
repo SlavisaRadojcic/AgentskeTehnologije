@@ -56,13 +56,13 @@ public class RestNode implements RestNodeLocal {
 
 			for(AgentCenter ac : slaves) {
 				RestBuilder.sendNewSlave(ac, slaveAddr); // master cvor javlja ostalim cvorovima da je novi cvor dosao u mrezu				
-				RestBuilder.sendNewAgentTypes(ac, slaveTypes); // master cvor dostalja ostalim cvorovima spisak tipova agenata novog cvora
+				RestBuilder.sendNewAgentTypes(ac, slaveTypes); 
 			}
 			RestBuilder.sendNodesToSlave(slaveAddr, slaves); // master cvor dostavlja spisak agenata novom cvoru
 			AgentManagerLocal aml = (AgentManagerLocal) context.lookup(AgentManagerLocal.LOOKUP);// master cvor dostavlja spisak tipova agenata novom cvoru
 			RestBuilder.sendNewAgentTypes(slaveAddr, aml.getAgentTypes());
-			RestBuilder.sendRunningAgentsToSlave(slaveAddr, aml.getRunningAgents());// master cvor dostavlja spisak tipova agenata novom cvoru
-			nml.addSlave(slaveAddr, slaveTypes); // na ovaj cvor dodamo novi cvor i njegove tipove
+			RestBuilder.sendRunningAgentsToSlave(slaveAddr, aml.getRunningAgents());
+			nml.addSlave(slaveAddr, slaveTypes); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 		
