@@ -43,23 +43,23 @@ public class PingAgent extends AgentClass {
 			/*System.out.println("Reply received from Pong " + poruka.getSender());
 			System.out.println("Reply content: " + poruka.getContent());*/
 			// sadrzaj poruke je ime pong agenta
-						AID receiver = new AID();
-						receiver.setName(poruka.getContent());
-						System.out.println("Request to send message to " + poruka.getContent() + " Pong.");
-						AgentType type = new AgentType(PongAgent.class.getSimpleName(), PongAgent.class.getPackage().getName());
-						receiver.setType(type);
-						AgentCenter host = lookupHost();
-						if (host == null) {
-							System.out.println("Error: Cannot locate host");
-							return;
-						}
-						receiver.setHost(host);
-						ACLMessage msg = new ACLMessage();
-						msg.setPerformative(Performative.inform);
-						msg.setReceivers(new AID[] { receiver });
-						msg.setSender(this.getId()); // samo Id
-						msg.setContent(poruka.getContent());
-						MessageBuilder.sendACL(msg);			
+			AID receiver = new AID();
+			receiver.setName(poruka.getContent());
+			System.out.println("Request to send message to " + poruka.getContent() + " Pong.");
+			AgentType type = new AgentType(PongAgent.class.getSimpleName(), PongAgent.class.getPackage().getName());
+			receiver.setType(type);
+			AgentCenter host = lookupHost();
+			if (host == null) {
+					System.out.println("Error: Cannot locate host");
+					return;
+			}
+			receiver.setHost(host);
+			ACLMessage msg = new ACLMessage();
+			msg.setPerformative(Performative.inform);
+			msg.setReceivers(new AID[] { receiver });
+			msg.setSender(this.getId()); // samo Id
+			msg.setContent(poruka.getContent());
+			MessageBuilder.sendACL(msg);			
 		}
 	}
 

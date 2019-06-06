@@ -21,6 +21,13 @@ public class PongAgent extends AgentClass {
 			response.setContent("Reply to message received from Ping " + poruka.getSender());
 			response.setSender(Id);
 			MessageBuilder.sendACL(response);
+		}else if (poruka.getPerformative() == Performative.inform) {
+			ACLMessage response = new ACLMessage();
+			response.setReceivers(new AID[] { poruka.getSender() });
+			response.setPerformative(Performative.inform);
+			response.setContent("Reply to message received from Ping " + poruka.getSender());
+			response.setSender(Id);
+			MessageBuilder.sendACL(response);
 		}
 
 	}
