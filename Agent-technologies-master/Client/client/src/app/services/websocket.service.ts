@@ -58,9 +58,7 @@ export class WebsocketService {
         console.log("performative: " + data[0].performative);
         console.log("content: " + data[0].content);
 
-        if (data[0].sender.name == "masterChess" && data[0].performative == "inform") {
-   
-        }
+        
       }
     };
 

@@ -36,12 +36,7 @@ public class JsonUtils {
 		obj.append("data", new JSONObject(at));
 		return obj.toString();
 	}
-
-	public static String getNodeRequestType(String nodeRequest) {
-		JSONObject obj = new JSONObject(nodeRequest);
-		return obj.getString("type");
-	}
-
+	
 	public static AgentCenter getNodeRequestSlaveAddres(String nodeRequest) {
 		JSONObject obj = new JSONObject(nodeRequest);
 		JSONObject jdata = obj.getJSONObject("data");
@@ -50,5 +45,12 @@ public class JsonUtils {
 		ac.setAlias(jdata.getString("alias"));
 		return ac;
 	}
+
+	public static String getNodeRequestType(String nodeRequest) {
+		JSONObject obj = new JSONObject(nodeRequest);
+		return obj.getString("type");
+	}
+
+	
 
 }

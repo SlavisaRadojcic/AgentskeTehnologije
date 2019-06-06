@@ -25,20 +25,23 @@ public class AgentCenter implements Serializable {
 		this.address = s[1];
 	}
 
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	
 	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	public String getAlias() {
 		return alias;
 	}
 
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
+	
 
 }
